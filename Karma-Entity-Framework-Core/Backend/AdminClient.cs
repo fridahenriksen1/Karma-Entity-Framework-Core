@@ -8,7 +8,7 @@ using Karma_Entity_Framework_Core.Model;
 
 namespace Karma_Entity_Framework_Core.Backend
 {
-    public class AdminBackend
+    public class AdminClient
     {
         // en metod för att skapa om och seeda databasen
 
@@ -38,6 +38,10 @@ namespace Karma_Entity_Framework_Core.Backend
 
             foreach (var C in q)
             {
+                Console.WriteLine($"\nName: {C.Fullname}, " +
+                                  $"\nEmail:{C.Email}, " +
+                                  $"\nPhone number: {C.Phone_Number}");
+
                 list.Add(C);
             }
             return list;
@@ -74,6 +78,12 @@ namespace Karma_Entity_Framework_Core.Backend
 
             foreach (var R in q)
             {
+                Console.WriteLine($"\nName: {R.Restaurant_Name}, " +
+                                  $"\nPhone Number:{R.Phone_Number}, " +
+                                  $"\nCity: {R.City}, " +
+                                  $"\nAddress: {R.Adress}," +
+                                  $"\nOpen Hours: {R.Open_Hours}");
+
                 list.Add(R);
             }
             return list;

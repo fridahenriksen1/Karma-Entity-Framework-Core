@@ -11,6 +11,7 @@ namespace Karma_Entity_Framework_Core.Model
     {
         [Key]
         public int RestaurantID { get; set; }
+        
         public string Restaurant_Name { get; set; }
         public string City { get; set; }
         public string Phone_Number { get; set; }

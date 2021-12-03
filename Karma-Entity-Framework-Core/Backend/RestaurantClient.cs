@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Karma_Entity_Framework_Core.Backend
 {
-    public class RestaurantBackend
+    public class RestaurantClient
     {
         // en metod för att få en lista över alla sålda matlådor för ett restaurang objekt
         public static List<object> ListForSoldFood_Packages()
@@ -29,6 +29,10 @@ namespace Karma_Entity_Framework_Core.Backend
             var list = new List<object>();
             foreach (var F in q)
             {
+                Console.WriteLine($"\nRestaurant: {F.Restaurant_Name}, " +
+                                  $"\nOrder:{F.OrderID}, " +
+                                  $"\nType of food: {F.Dish}");
+
                 list.Add(F);
             }
             return list;

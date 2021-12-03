@@ -13,7 +13,7 @@ namespace Karma_Entity_Framework_Core.Model
         public int CustomerID { get; set; }
         [Required]
         public string Fullname { get; set; }
-        [Required]
+        //[Required]
         public string Email { get; set; }
         [Required]
         public string Username { get; set; }
