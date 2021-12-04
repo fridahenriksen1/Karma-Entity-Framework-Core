@@ -94,6 +94,7 @@ namespace Karma_Entity_Framework_Core.Data
                 new() {Dish = "Sushi", Type_of_food = "Fisk", Price = "75:-", Expiration_Date = DateTime.Today + TimeSpan.FromDays(3),Restaurants = restaurant1[0]},
                 new() {Dish = "Kycklingbaguette", Type_of_food = "Kött", Price = "50:-", Expiration_Date = DateTime.Today + TimeSpan.FromDays(8), Restaurants = restaurant1[1]},
                 new() {Dish = "Toast Skagen", Type_of_food = "Fisk", Price = "70:-", Expiration_Date = DateTime.Today + TimeSpan.FromDays(2) ,Restaurants = restaurant1[0]},
+                new() {Dish = "Sparrissoppa", Type_of_food = "Vego", Price = "75:-", Expiration_Date = DateTime.Today + TimeSpan.FromDays(4) ,Restaurants = restaurant1[3]},
 
             };
             this.food_packages.AddRange(food_package);

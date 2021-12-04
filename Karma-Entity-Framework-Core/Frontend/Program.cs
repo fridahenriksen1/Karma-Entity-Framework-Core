@@ -1,185 +1,203 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using System.Transactions;
 using Karma_Entity_Framework_Core.Backend;
 using Karma_Entity_Framework_Core.Data;
 
-class Program
+internal class Program
 {
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
-
         using var ctx = new FoodRescue();
-
-        string userName = Environment.UserName;
+        var userName = Environment.UserName;
 
         Console.WriteLine($"Welcome {userName}! :)");
-        Console.WriteLine("Press any key to continue...");
-        Console.ReadKey();
-        Console.Clear();
 
-        AdminClient.CreateAndSeedDatabase();
+        Console.WriteLine("\n\nLog in! ");
+        Console.WriteLine("\nType username:");
+        var username = Console.ReadLine();
+        Console.WriteLine("Type password:");
+        var password = Console.ReadLine();
 
+        var loginManager = new LoginManager();
+        var user = loginManager.TryLogin(username, password);
 
-        bool myBool = true;
-
-        while (myBool)
+        if (user != null)
         {
-            Console.WriteLine("1] Get a list of all unpurchased lunch boxes in all restaurants depending on the food type," +
-                              " sorted by price lowest first");
-            Console.WriteLine("2] Buy a lunch box");
-            Console.WriteLine("3] List of all sold lunch boxes for a restaurant item");
-            Console.WriteLine("4] Add a new lunch box item to a restaurant");
-            Console.WriteLine("5] Re-create and seed the database");
-            Console.WriteLine("6] Se all users");
-            Console.WriteLine("7] Be able to delete a user based on user id");
-            Console.WriteLine("8] See all restaurants");
-            Console.WriteLine("9] Be able to add a new restaurant");
-            Console.WriteLine("10] See a customer's order");
-            Console.WriteLine("11] See all customers' orders");
-            Console.WriteLine("12] Exit");
+            Console.WriteLine("\nWelcome" +
+                              $"\t{user.Fullname}," +
+                              $" \nEmail: {user.Email}, " +
+                              $"\nPhone number: {user.Phone_Number},");
 
 
-            Int32.TryParse(Console.ReadLine(), out int number);
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
+            Console.Clear();
 
-            switch (number)
+            AdminClient.CreateAndSeedDatabase();
+
+
+            var myBool = true;
+
+            while (myBool)
             {
-                case 1:
-
-                    Console.WriteLine("Enter what kind of food, for example Fisk/Kött/Vego:");
-                    UserClient.UnpurchasedFood_Packages(Console.ReadLine());
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadLine();
-                    Console.Clear();
-                    break;
-
-                case 2:
-                    Console.WriteLine("Please add food id:");
-                    int foodPackages = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine("Please enter your customer id");
-                    int customer = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine("Please enter your email");
-                    string email = Console.ReadLine();
-
-                    UserClient.BuyAFood_Packages(foodPackages, customer, email);
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadLine();
-                    Console.Clear();
-                    break;
+                Console.WriteLine(
+                    "1] Get a list of all unpurchased lunch boxes in all restaurants depending on the food type," +
+                    " sorted by price lowest first");
+                Console.WriteLine("2] Buy a lunch box");
+                Console.WriteLine("3] List of all sold lunch boxes for a restaurant item");
+                Console.WriteLine("4] Add a new lunch box item to a restaurant");
+                Console.WriteLine("5] Re-create and seed the database");
+                Console.WriteLine("6] Se all users");
+                Console.WriteLine("7] Be able to delete a user based on user id");
+                Console.WriteLine("8] See all restaurants");
+                Console.WriteLine("9] Be able to add a new restaurant");
+                Console.WriteLine("10] See a customer's order");
+                Console.WriteLine("11] See all customers' orders");
+                Console.WriteLine("12] Exit");
 
 
-                case 3:
-                    RestaurantClient.ListForSoldFood_Packages();
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadLine();
-                    Console.Clear();
-                    break;
+                int.TryParse(Console.ReadLine(), out var number);
 
-                case 4:
-                    Console.WriteLine("Dish:");
-                    string dish = Console.ReadLine();
-                    Console.WriteLine("Typ of food: ");
-                    string typeOfFood = Console.ReadLine();
-                    Console.WriteLine("Price: ");
-                    string price = Console.ReadLine();
-                    Console.WriteLine("Expiration date: ");
-                    DateTime expirationDate = DateTime.Parse(Console.ReadLine());
-                    Console.WriteLine("Restaurant id");
-                    int restaurantId = Convert.ToInt32(Console.ReadLine());
+                switch (number)
+                {
+                    case 1:
 
-                    RestaurantClient.AddFood_PackagesToResturant(dish, typeOfFood, price, expirationDate, restaurantId);
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadLine();
-                    Console.Clear();
-                    break;
+                        Console.WriteLine("Enter what kind of food, for example Fisk/Kött/Vego:");
+                        UserClient.UnpurchasedFood_Packages(Console.ReadLine());
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
 
-                case 5:
-                    AdminClient.CreateAndSeedDatabase();
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadLine();
-                    Console.Clear();
-                    break;
+                    case 2:
+                        Console.WriteLine("Please add food id:");
+                        var foodPackages = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Please enter your customer id");
+                        var customer = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Please enter your email");
+                        var email = Console.ReadLine();
+
+                        UserClient.BuyAFood_Packages(foodPackages, customer, email);
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
 
 
-                case 6:
+                    case 3:
+                        RestaurantClient.ListForSoldFood_Packages();
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
 
-                    AdminClient.SeeAllUsers();
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadLine();
-                    Console.Clear();
-                    break;
+                    case 4:
+                        Console.WriteLine("Dish:");
+                        var dish = Console.ReadLine();
+                        Console.WriteLine("Typ of food: ");
+                        var typeOfFood = Console.ReadLine();
+                        Console.WriteLine("Price: ");
+                        var price = Console.ReadLine();
+                        Console.WriteLine("Expiration date: ");
+                        var expirationDate = DateTime.Parse(Console.ReadLine());
+                        Console.WriteLine("Restaurant id");
+                        var restaurantId = Convert.ToInt32(Console.ReadLine());
 
-                case 7:
-                    Console.WriteLine("Enter customer id to delete user: ");
-                    AdminClient.EraseUser(Convert.ToInt32(Console.ReadLine()));
-                    Console.WriteLine("User is deleted!");
-                    AdminClient.SeeAllUsers();
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadLine();
-                    Console.Clear();
+                        RestaurantClient.AddFood_PackagesToResturant(dish, typeOfFood, price, expirationDate,
+                            restaurantId);
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
 
-                    break;
-
-                case 8:
-
-                    AdminClient.SeeAllRestaurants();
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadLine();
-                    Console.Clear();
-                    break;
-
-                case 9:
-
-                    Console.WriteLine("Enter restaurant: ");
-                    string reaturantName = Console.ReadLine();
-                    Console.WriteLine("Enter address: ");
-                    string adress = Console.ReadLine();
-                    Console.WriteLine("Enter city: ");
-                    string city = Console.ReadLine();
-                    Console.WriteLine("Enter phone number: ");
-                    string number1 = Console.ReadLine();
-                    Console.WriteLine("Enter open hours: ");
-                    string openHours = Console.ReadLine();
+                    case 5:
+                        AdminClient.CreateAndSeedDatabase();
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
 
 
-                    AdminClient.AddANewRestaurant(reaturantName, adress, city, number1, openHours);
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadLine();
-                    Console.Clear();
-                    break;
+                    case 6:
 
-                case 10:
-                    
-                    Console.WriteLine("Enter your customer id:");
-                    int customerId = Convert.ToInt32(Console.ReadLine());
-                    UserClient.SeeCustomersOrders(customerId);
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadLine();
-                    Console.Clear();
+                        AdminClient.SeeAllUsers();
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
 
-                    break;
+                    case 7:
+                        Console.WriteLine("Enter customer id to delete user: ");
+                        AdminClient.EraseUser(Convert.ToInt32(Console.ReadLine()));
+                        Console.WriteLine("User is deleted!");
+                        AdminClient.SeeAllUsers();
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadLine();
+                        Console.Clear();
 
-                case 11:
+                        break;
 
-                    UserClient.SeeCustomersOrders2();
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadLine();
-                    Console.Clear();
-                    break;
-                case 12:
-                    myBool = false;
+                    case 8:
 
-                    break;
+                        AdminClient.SeeAllRestaurants();
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
 
-                default:
+                    case 9:
 
-                    Console.WriteLine("Please select an option! :)");
+                        Console.WriteLine("Enter restaurant: ");
+                        var reaturantName = Console.ReadLine();
+                        Console.WriteLine("Enter address: ");
+                        var adress = Console.ReadLine();
+                        Console.WriteLine("Enter city: ");
+                        var city = Console.ReadLine();
+                        Console.WriteLine("Enter phone number: ");
+                        var number1 = Console.ReadLine();
+                        Console.WriteLine("Enter open hours: ");
+                        var openHours = Console.ReadLine();
 
-                    break;
 
+                        AdminClient.AddANewRestaurant(reaturantName, adress, city, number1, openHours);
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
+
+                    case 10:
+
+                        Console.WriteLine("Enter your customer id:");
+                        var customerId = Convert.ToInt32(Console.ReadLine());
+                        UserClient.SeeCustomersOrders(customerId);
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadLine();
+                        Console.Clear();
+
+                        break;
+
+                    case 11:
+
+                        UserClient.SeeCustomersOrders2();
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
+                    case 12:
+                        myBool = false;
+                        break;
+
+                    default:
+
+                        Console.Clear();
+                        Console.WriteLine("\nPlease select an option! :)\n");
+                        break;
+                }
             }
-
+        }
+        else
+        {
+            Console.WriteLine("Login failed!");
         }
     }
-
 }
