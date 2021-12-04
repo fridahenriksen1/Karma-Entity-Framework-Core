@@ -10,6 +10,9 @@ internal class Program
         using var ctx = new FoodRescue();
         var userName = Environment.UserName;
 
+        Console.BackgroundColor = ConsoleColor.Gray;
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Black;
         Console.WriteLine($"Welcome {userName}! :)");
 
         Console.WriteLine("\n\nLog in! ");
